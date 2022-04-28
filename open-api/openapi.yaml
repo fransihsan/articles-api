@@ -1,0 +1,110 @@
+openapi: '3.0.2'
+info:
+  title: Articles Open API Test
+  description: Dokumentasi Test Kumparan - Articles
+  contact:
+    name: Frans Ihsan
+    email: fransihsan8888@gmail.com
+  version: "1.0"
+servers:
+  - url: https://fransihsan.cloud.okteto.net
+tags:
+  - name: Articles
+    description: Operasi tentang artikel
+paths:
+  /articles:
+    post:
+      tags:
+        - Articles
+      summary: Tambahkan Artikel Baru
+      requestBody:
+        required: true
+        description: Menambahkan artikel baru dengan input yang sesuai
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                title:
+                  type: string
+                body:
+                  type: string
+              example:
+                author: frans
+                title: Ini adalah judul artikel
+                body: Ini adalah isi dari artikel
+      responses:
+        201:
+          $ref: '#/components/responses/201CreateNewArticle'
+        400:
+          $ref: '#/components/responses/400CreateNewArticleBindErrorOrEmptyFields'
+        500:
+          $ref: '#/components/responses/500CreateNewArticleInternalServerError'
+components:
+  responses:
+    201CreateNewArticle:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  author:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+            example:
+              code: 201
+              message: sukses menambahkan artikel baru
+              data:
+                id: 1
+                author: frans
+                title: Ini adalah judul artikel
+                body: Ini adalah isi dari artikel
+    400CreateNewArticleBindErrorOrEmptyFields:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              data:
+                type: object
+            example:
+              code: 400
+              message: input dari author tidak sesuai, author, title atau body tidak boleh kosong
+              data: null
+    500CreateNewArticleInternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              data:
+                type: object
+          example:
+            code: 500
+            message: gagal membuat artikel baru
+            data: null
