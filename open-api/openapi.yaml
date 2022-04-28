@@ -42,6 +42,15 @@ paths:
           $ref: '#/components/responses/400CreateNewArticleBindErrorOrEmptyFields'
         500:
           $ref: '#/components/responses/500CreateNewArticleInternalServerError'
+    get:
+      summary: Dapatkan data semua artikel
+      tags:
+        - Articles
+      responses:
+        200:
+          $ref: '#/components/responses/200GetArticlesSuccessful'
+        500:
+          $ref: '#/components/responses/500GetArticlesInternalServerError'
 components:
   responses:
     201CreateNewArticle:
@@ -107,4 +116,57 @@ components:
           example:
             code: 500
             message: gagal membuat artikel baru
+            data: null
+    200GetArticlesSuccessful:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    author:
+                      type: string
+                    title:
+                      type: string
+                    body:
+                      type: string
+            example:
+              code: 200
+              message: sukses mendapatkan semua artikel
+              data:
+                - id: 1
+                  author: frans 
+                  title: Ini adalah judul artikel
+                  body: Ini adalah isi dari artikel
+                - id: 2
+                  author: ihsan 
+                  title: Ini adalah judul artikel kedua
+                  body: Ini adalah isi dari artikel kedua
+    500GetArticlesInternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+              data:
+                type: object
+          example:
+            code: 500
+            message: tidak terdapat data artikel sama sekali
             data: null
