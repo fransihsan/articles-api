@@ -46,6 +46,23 @@ paths:
       summary: Dapatkan data semua artikel
       tags:
         - Articles
+      parameters:
+        - name: query
+          in: query
+          description: untuk mencari kata kunci dalam judul dan isi artikel
+          required: false
+          schema:
+            type: string
+            example:
+              query: teknologi terbaru
+        - name: author
+          in: query
+          description: saring berdasarkan nama pengarang
+          required: false
+          schema:
+            type: string
+            example:
+              author: frans
       responses:
         200:
           $ref: '#/components/responses/200GetArticlesSuccessful'
