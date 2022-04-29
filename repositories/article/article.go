@@ -28,7 +28,7 @@ func (repo *ArticleRepository) Create(newArticle A.Articles) (A.Articles, error)
 
 func (repo *ArticleRepository) GetAllArticles() ([]A.Articles, error) {
 	var articles []A.Articles
-	repo.db.Find(&articles)
+	repo.db.Find(&articles).Order("created_at desc")
 	if len(articles) < 1 {
 		return nil, errors.New("tidak terdapat data artikel sama sekali")
 	}
@@ -37,9 +37,18 @@ func (repo *ArticleRepository) GetAllArticles() ([]A.Articles, error) {
 
 func (repo *ArticleRepository) FilteByAuthorName(author string) ([]A.Articles, error) {
 	var articles []A.Articles
-	repo.db.Find(&articles, "author = ?", author)
+	repo.db.Find(&articles, "author = ?", author).Order("created_at desc")
 	if len(articles) < 1 {
-		return nil, errors.New("tidak terdapat data artikel sama sekali")
+		return nil, errors.New("artikel berdasarkan nama pengarang tidak ditemukan")
+	}
+	return articles, nil
+}
+
+func (repo *ArticleRepository) SearchArticle(query string) ([]A.Articles, error) {
+	var articles []A.Articles
+	repo.db.Find(&articles, "title LIKE ? OR body LIKE ?", "%" + query + "%", "%" + query + "%").Order("created_at desc")
+	if len(articles) < 1 {
+		return nil, errors.New("kata kunci yang di cari tidak ditemukan")
 	}
 	return articles, nil
 }
