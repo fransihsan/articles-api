@@ -34,3 +34,13 @@ func (ctl *ArticleController) Create() echo.HandlerFunc {
 		return c.JSON(http.StatusCreated, common.Success(http.StatusCreated, "sukses menambahkan artikel baru", ToResponseCreateArticle(res)))
 	}
 }
+
+func (ctl *ArticleController) GetAllArticles() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		res, err := ctl.repo.GetAllArticles()
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, common.InternalServerError(err.Error()))
+		}
+		return c.JSON(http.StatusOK, common.Success(http.StatusOK, "sukses mendapatkan semua artikel", ToResponseGetAllArticles(res)))
+	}
+}
