@@ -24,4 +24,10 @@ func BadRequest(message string) Response {
 	}
 }
 
-
+func Success(code int, message string, data interface{}) Response {
+	return Response{
+		Code:    code,
+		Message: message,
+		Data:    data,
+	}
+}
