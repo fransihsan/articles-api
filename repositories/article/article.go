@@ -25,3 +25,12 @@ func (repo *ArticleRepository) Create(newArticle A.Articles) (A.Articles, error)
 	}
 	return newArticle, nil
 }
+
+func (repo *ArticleRepository) GetAllArticles() ([]A.Articles, error) {
+	var articles []A.Articles
+	repo.db.Find(&articles)
+	if len(articles) < 1 {
+		return nil, errors.New("tidak terdapat data artikel sama sekali")
+	}
+	return articles, nil
+}
