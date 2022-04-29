@@ -16,4 +16,12 @@ func InternalServerError(message string) Response {
 	}
 }
 
+func BadRequest(message string) Response {
+	return Response{
+		Code:    http.StatusBadRequest,
+		Message: message,
+		Data:    nil,
+	}
+}
+
 
