@@ -37,7 +37,9 @@ func (ctl *ArticleController) Create() echo.HandlerFunc {
 
 func (ctl *ArticleController) GetAllArticles() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		res, err := ctl.repo.GetAllArticles()
+		keyword := c.QueryParam("query")
+		author := c.QueryParam("author")
+		res, err := ctl.repo.GetAllArticles(author, keyword)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.InternalServerError(err.Error()))
 		}
