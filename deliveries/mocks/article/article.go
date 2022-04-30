@@ -13,7 +13,7 @@ func (repo *MockArticleRepository) Create(newArticle A.Articles) (A.Articles, er
 	return A.Articles{Model: gorm.Model{ID: 1}, Author: "frans", Title: "title", Body: "body"}, nil
 }
 
-func (repo *MockArticleRepository) GetAllArticles() ([]A.Articles, error) {
+func (repo *MockArticleRepository) GetAllArticles(author, query string) ([]A.Articles, error) {
 	article1 := A.Articles{
 		Model:  gorm.Model{ID: 1},
 		Author: "frans",
@@ -37,6 +37,6 @@ func (repo *MockFalseArticleRepository) Create(newArticle A.Articles) (A.Article
 	return A.Articles{}, errors.New("gagal membuat artikel baru")
 }
 
-func (repo *MockFalseArticleRepository) GetAllArticles() ([]A.Articles, error) {
+func (repo *MockFalseArticleRepository) GetAllArticles(author, query string) ([]A.Articles, error) {
 	return nil, errors.New("tidak terdapat data artikel sama sekali")
 }
