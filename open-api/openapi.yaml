@@ -16,7 +16,7 @@ paths:
     post:
       tags:
         - Articles
-      summary: Tambahkan Artikel Baru
+      summary: Tambahkan artikel baru
       requestBody:
         required: true
         description: Menambahkan artikel baru dengan input yang sesuai
@@ -54,15 +54,15 @@ paths:
           schema:
             type: string
             example:
-              query: teknologi terbaru
+              teknologi
         - name: author
           in: query
-          description: saring berdasarkan nama pengarang
+          description: saring artikel berdasarkan nama pengarang
           required: false
           schema:
             type: string
             example:
-              author: frans
+              frans
       responses:
         200:
           $ref: '#/components/responses/200GetArticlesSuccessful'
@@ -92,6 +92,8 @@ components:
                     type: string
                   body:
                     type: string
+                  created_at:
+                    type: string
             example:
               code: 201
               message: sukses menambahkan artikel baru
@@ -100,6 +102,7 @@ components:
                 author: frans
                 title: Ini adalah judul artikel
                 body: Ini adalah isi dari artikel
+                created_at: 30 April 2022 06:48
     400CreateNewArticleBindErrorOrEmptyFields:
       description: Bad Request
       content:
@@ -162,14 +165,16 @@ components:
               code: 200
               message: sukses mendapatkan semua artikel
               data:
-                - id: 1
-                  author: frans 
-                  title: Ini adalah judul artikel
-                  body: Ini adalah isi dari artikel
                 - id: 2
                   author: ihsan 
                   title: Ini adalah judul artikel kedua
                   body: Ini adalah isi dari artikel kedua
+                  created_at: 30 April 2022 07:00
+                - id: 1
+                  author: frans 
+                  title: Ini adalah judul artikel
+                  body: Ini adalah isi dari artikel
+                  created_at: 30 April 2022 06:48
     500GetArticlesInternalServerError:
       description: Internal Server Error
       content:
