@@ -46,7 +46,7 @@ jobs:
         uses: okteto/apply@latest
         with:
           namespace: fransihsan
-          manifest: test-deploy.yaml
+          manifest: deployment.yaml
       
       - uses: actions-hub/kubectl@master
         env:
