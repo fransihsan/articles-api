@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: fransihsan/experiment:latest
+          tags: fransihsan/articles:latest
 
       - name: checkout
         uses: actions/checkout@master
