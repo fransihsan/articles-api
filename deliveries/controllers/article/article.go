@@ -2,7 +2,9 @@ package article
 
 import (
 	"articles-api/deliveries/controllers/common"
+	"articles-api/deliveries/helpers/gocache"
 	_ArticleRepo "articles-api/repositories/article"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -39,10 +41,17 @@ func (ctl *ArticleController) GetAllArticles() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		keyword := c.QueryParam("query")
 		author := c.QueryParam("author")
+		keyCache := "get" + keyword + author
+		data, found := gocache.GetCache(keyCache)
+		if found {
+			fmt.Println("successfully! load data from cache")
+			return c.JSON(http.StatusOK, common.Success(http.StatusOK, "sukses mendapatkan semua artikel", data))
+		}
 		res, err := ctl.repo.GetAllArticles(author, keyword)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, common.InternalServerError(err.Error()))
 		}
+		gocache.SetCache(keyCache, res)
 		return c.JSON(http.StatusOK, common.Success(http.StatusOK, "sukses mendapatkan semua artikel", ToResponseGetAllArticles(res)))
 	}
 }
