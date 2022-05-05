@@ -118,7 +118,25 @@ func TestGetAllUsers(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, response.Code)
 	})
 
-	t.Run("succeed to get all users", func(t *testing.T) {
+	t.Run("succeed to get all articles", func(t *testing.T) {
+		req := httptest.NewRequest(http.MethodGet, "/", bytes.NewBuffer(nil))
+		res := httptest.NewRecorder()
+
+		req.Header.Set("Content-Type", "application/json")
+
+		context := e.NewContext(req, res)
+		context.SetPath(fmt.Sprintf("%v", rootPath))
+
+		articleController := NewArticleController(&MockArticle.MockArticleRepository{})
+		articleController.GetAllArticles()(context)
+
+		response := common.Response{}
+		json.Unmarshal([]byte(res.Body.Bytes()), &response)
+
+		assert.Equal(t, http.StatusOK, response.Code)
+	})
+
+	t.Run("succeed to load cache article", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/", bytes.NewBuffer(nil))
 		res := httptest.NewRecorder()
 
