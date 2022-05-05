@@ -15,7 +15,7 @@ spec:
         app: go-app
     spec:
       containers:
-        - image: fransihsan/img-be:latest
+        - image: fransihsan/articles:latest
           name: go-app
           env:
             - name: "PORT"
@@ -46,8 +46,6 @@ spec:
                   name: go-app-secret
             - name: "DB_LOC"
               value: "Asia%2FJakarta"
-            - name: "JWT_SECRET"
-              value: "UCUPGAMTEMG!!!"
           ports:
             - containerPort: 8000
 ---
